@@ -1,0 +1,5 @@
+﻿.noteRow {
+    border: 4px double black; /* Параметры границы */
+    background: #fc3; /* Цвет фона */
+    padding: 10px;
+}
