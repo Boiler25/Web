@@ -37,7 +37,7 @@ namespace WebCourseApp
                 };
             });
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>();
-            string con = "Server=BOSS-PC;Database=CourseDB;Trusted_Connection=True;MultipleActiveResultSets=true";
+            string con = "Server=BOSS-PC;Database=CDBW;Trusted_Connection=True;MultipleActiveResultSets=true";
             services.AddDbContext<DataContext>(options => options.UseSqlServer(con));
             services.AddMvc();
         }

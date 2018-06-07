@@ -122,7 +122,7 @@ namespace WebCourseApp.Controllers
         public async Task<IActionResult> LogisAuthenticatedOff()
         {
             User usr = await GetCurrentUserAsync();
-            var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
+            var message = usr == null ? "" : "Вы вошли как: " + usr.UserName;
             var msg = new
             {
                 message

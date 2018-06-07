@@ -9,7 +9,7 @@
         } else if (request.status == 200) {
             msg = "";
         } else {
-            msg = "Вы не авторизованы";
+            msg = "";
         }
         document.getElementById("msgLoad").innerHTML = msg;
     };
@@ -19,10 +19,11 @@
     myObj = JSON.parse(request.responseText);
     var x = "";
     for (i in myObj) {
+        var u = myObj[i].user;
         x += "<div class=\"noteRow\">";
-        x += "<h4> " + myObj[i].text + "</h4>";
-        x += "<h4> " + myObj[i].id + "</h4>";
-        x += "<button type=\"button\" onclick=\"DeleteBlog(\"" + myObj[i].id + "\")\">Удалить</button>";
+        x += "<h2> " + myObj[i].text + "</h2>";
+        x += "<h4> " + u.email + "</h4>";
+        x += "<button type=\"button\" onclick=\"DeleteBlog(" + myObj[i].id + ")\">Удалить</button>";
         x += "</div>";
     };
     document.getElementById("blogsDiv").innerHTML = x;
@@ -41,12 +42,12 @@ function CreateBlog() {
         var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
         xmlhttp.onload = function (ev) {
             var msg = ""
-            if (xmlhttp.status == 401) {
+            if (xmlhttp.status == 404) {
                 msg = "Вы не авторизованы";
             } else if (xmlhttp.status == 200) {
                 msg = "";
             } else {
-                msg = "Вы не авторизованы";
+                msg = "";
             }
             document.getElementById("msgCreate").innerHTML = msg;
         }
@@ -168,7 +169,18 @@ function GetCurrentUser() {
         var myObj = "";
         myObj = xmlhttp.responseText != "" ? JSON.parse(xmlhttp.responseText) :
             {};
-        document.getElementById("msgAuth").innerHTML = myObj.message;
+        if (myObj.message == "") {
+            document.getElementById("msgAuth").innerHTML = "<a class=\"btn btn- outline\" href=\"#\" data-toggle=\"modal\" data-target=\"#exampleModal\">Войти</a>";
+            document.getElementById("Out").innerHTML = "";
+            document.getElementById("Reg").innerHTML = "<a class='btn btn- outline' href='#' data-toggle='modal' data-target='#exampleModal1'>Регистрация</a>";
+        }
+        else {
+            document.getElementById("msgAuth").innerHTML = myObj.message;
+            document.getElementById("Reg").innerHTML = "";
+            document.getElementById("Out").innerHTML = "<a class='btn btn- outline' href='#' onclick='LogOut()'>Выйти</a>";
+        }
+
+        //<a class="btn btn-outline" onclick="LogOut()">Выйти</a>
     }
     xmlhttp.send();
 };

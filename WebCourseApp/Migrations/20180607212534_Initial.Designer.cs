@@ -11,7 +11,7 @@ using WebCourseApp.Models;
 namespace WebCourseApp.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20180605093006_Initial")]
+    [Migration("20180607212534_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,7 +131,7 @@ namespace WebCourseApp.Migrations
 
             modelBuilder.Entity("WebCourseApp.Models.Note", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Text");
@@ -139,6 +139,8 @@ namespace WebCourseApp.Migrations
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notes");
                 });
@@ -237,6 +239,13 @@ namespace WebCourseApp.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebCourseApp.Models.Note", b =>
+                {
+                    b.HasOne("WebCourseApp.Models.User", "user")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
